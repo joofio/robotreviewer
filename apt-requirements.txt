@@ -15,3 +15,4 @@ git
 rabbitmq-server
 sudo
 gradle
+net-tools

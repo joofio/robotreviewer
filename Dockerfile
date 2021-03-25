@@ -16,7 +16,7 @@ RUN mkdir -p /etc/pki/tls/certs && \
     ln -s /etc/ssl/certs/ca-certificates.crt /etc/pki/tls/certs/ca-bundle.crt
 
 # node.js and utils
-RUN add-apt-repository ppa:chris-lea/node.js
+# RUN add-apt-repository ppa:chris-lea/node.js not needed anymore
 RUN apt-get install -y nodejs npm && npm update
 ENV NODE_PATH $NODE_PATH:/usr/local/lib/node_modules
 RUN npm install -g requirejs
@@ -24,7 +24,7 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 # Gradle requires jdk to work! Java incoming!
 RUN apt-get -y install openjdk-8-jdk wget unzip
-RUN java -version # check that java works
+RUN bg # check that java works
 
 # install gradle the annoying thing
 RUN mkdir /opt/gradle
