@@ -1,6 +1,7 @@
 #!/bin/sh
-nohup rabbitmq-server -detached
+conda activate robotreviewer
 
+nohup rabbitmq-server -detached
 
 export ROBOTREVIEWER_GROBID_PATH="/var/lib/deploy/grobid-0.5.1"
 export ROBOTREVIEWER_GROBID_HOST="http://0.0.0.0:8070"
@@ -11,4 +12,4 @@ cd /var/lib/deploy/ && nohup bert-serving-start -model_dir /var/lib/deploy/robot
 sleep 2
 cd /var/lib/deploy/ && nohup celery -A robotreviewer.ml_worker worker --loglevel=info --concurrency=1 --pool=solo &
 cd /var/lib/deploy/ && nohup python /var/lib/deploy/server.py &
-sleep infinity 
+sleep infinity

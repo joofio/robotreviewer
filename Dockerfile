@@ -6,9 +6,12 @@ ENV DEBIAN_FRONTEND noninteractive
 # create deploy user
 RUN useradd --create-home --home /var/lib/deploy deploy
 
+# update APT and install apt-utils
+RUN apt-get -qq update -y
+RUN apt-get install -y apt-utils
+
 # install apt-get requirements
 ADD apt-requirements.txt /tmp/apt-requirements.txt
-RUN apt-get -qq update -y
 RUN xargs -a /tmp/apt-requirements.txt apt-get install -y --no-install-recommends && apt-get clean
 
 # Certs
@@ -16,7 +19,7 @@ RUN mkdir -p /etc/pki/tls/certs && \
     ln -s /etc/ssl/certs/ca-certificates.crt /etc/pki/tls/certs/ca-bundle.crt
 
 # node.js and utils
-RUN add-apt-repository ppa:chris-lea/node.js
+# RUN add-apt-repository ppa:chris-lea/node.js
 RUN apt-get install -y nodejs npm && npm update
 ENV NODE_PATH $NODE_PATH:/usr/local/lib/node_modules
 RUN npm install -g requirejs
@@ -40,7 +43,7 @@ RUN cd /var/lib/deploy/ && wget https://github.com/kermitt2/grobid/archive/0.5.1
     unzip grobid.zip && \
     cd /var/lib/deploy/grobid-0.5.1 && \
     gradle clean install && \
-#    mvn -Dmaven.test.skip=true clean install && \
+    #    mvn -Dmaven.test.skip=true clean install && \
     rm -f /var/lib/deploy/grobid.zip
 
 RUN chown -R deploy.deploy /var/lib/deploy/
@@ -62,8 +65,6 @@ RUN pip install werkzeug==0.16.0 -U
  
 ARG TFVER=tensorflow
 RUN pip install $TFVER==1.12.0
-
-
 #strange Theano problem
 #ENV MKL_THREADING_LAYER=GNU
 
@@ -77,7 +78,7 @@ ADD robotreviewer /var/lib/deploy/robotreviewer
 RUN chown -R deploy.deploy /var/lib/deploy/robotreviewer
 
 USER deploy
-VOLUME /var/lib/deploy/src/robotreviewer/data
+VOLUME /var/lib/deploy/robotreviewer/data
 # compile client side assets
 RUN cd /var/lib/deploy/robotreviewer/ && \
     r.js -o static/build.js && \

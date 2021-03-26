@@ -1,0 +1,1 @@
+docker run --name "robotreviewer" --volume D:\Workspaces\VSCode\robotreviewer\robotreviewer/data:/var/lib/deploy/robotreviewer/data  --env ROBOTREVIEWER_REST_API=false -d --restart="always" -p 127.0.0.1:5050:5000 robotreviewer

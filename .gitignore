@@ -95,6 +95,8 @@ nbproject
 *.out
 *.log
 .tern-port
+robotreviewer/data/scibert_scivocab_uncased
+robotreviewer/data/log.txt
 robotreviewer/data/uploaded_pdfs/*
 deploy.tar.gz
 !.gitkeep
