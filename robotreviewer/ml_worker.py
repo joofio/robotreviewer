@@ -335,6 +335,20 @@ def pdf_annotation_pipeline(bot_names, data):
     # makes it here!
     log.info("STARTING PIPELINE (made it to annotation_pipeline)")
 
+        # pico span bot must be loaded first i have *no* idea why...
+    log.info("LOADING ROBOTS -> V2")
+    bots = {"pico_span_bot": PICOSpanRobot(),
+            "bias_bot": BiasRobot(top_k=3),
+            "pico_bot": PICORobot(),
+            "pubmed_bot": PubmedRobot(),
+            # "ictrp_bot": ICTRPRobot(),
+            "rct_bot": RCTRobot(),
+            "mesh_bot": MeshRobot(),
+            #"pico_viz_bot": PICOVizRobot(),
+            "punchline_bot":PunchlinesBot(),
+            "sample_size_bot":SampleSizeBot(),
+            "bias_ab_bot": BiasAbRobot(),
+            "human_bot": HumanRobot()}
 
     # DEBUG
     current_task.update_state(state='PROGRESS',meta={'process_percentage': 78, 'task': 'starting annotation pipeline'})

@@ -141,6 +141,8 @@ def annotate_status(report_uuid):
     check and return status of celery annotation process
     '''
     result = AsyncResult(report_uuid, app=celery_app)
+    log.debug("Result Async is {} ".format(result))
+
     return json.dumps({"state": result.state, "meta": result.result})
 
 

@@ -54,9 +54,11 @@ A BibTeX entry for LaTeX users is:
 
 We maintain a working Dockerfile in the repo, which is usually the easiest way to install locally.
 
-First you should clone this repository, and download/decompress the SciBERT model file.
+First you should clone this repository, and download/decompress the SciBERT model file.  
+You should also pull the LFS files in order to build correctly. Check [here]() for more info
 ```
 git clone https://github.com/ijmarshall/robotreviewer.git
+git lfs pull
 wget https://s3-us-west-2.amazonaws.com/ai2-s2-research/scibert/tensorflow_models/scibert_scivocab_uncased.tar.gz
 tar -zxf scibert_scivocab_uncased.tar.gz --directory robotreviewer/robotreviewer/data
 ```

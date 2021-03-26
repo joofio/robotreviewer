@@ -57,7 +57,9 @@ ENV PATH /var/lib/deploy/miniconda3/envs/robotreviewer/bin:$PATH
 RUN python -m nltk.downloader punkt stopwords
 #RUN python -m spacy.en.download all
 RUN python -m spacy download en
-
+RUN pip install vine==1.3.0 -U
+RUN pip install werkzeug==0.16.0 -U
+ 
 ARG TFVER=tensorflow
 RUN pip install $TFVER==1.12.0
 
