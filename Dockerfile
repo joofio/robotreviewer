@@ -6,9 +6,12 @@ ENV DEBIAN_FRONTEND noninteractive
 # create deploy user
 RUN useradd --create-home --home /var/lib/deploy deploy
 
+# update APT and install apt-utils
+RUN apt-get -qq update -y
+RUN apt-get install -y apt-utils
+
 # install apt-get requirements
 ADD apt-requirements.txt /tmp/apt-requirements.txt
-RUN apt-get -qq update -y
 RUN xargs -a /tmp/apt-requirements.txt apt-get install -y --no-install-recommends && apt-get clean
 
 # Certs
@@ -16,7 +19,7 @@ RUN mkdir -p /etc/pki/tls/certs && \
     ln -s /etc/ssl/certs/ca-certificates.crt /etc/pki/tls/certs/ca-bundle.crt
 
 # node.js and utils
-# RUN add-apt-repository ppa:chris-lea/node.js not needed anymore
+# RUN add-apt-repository ppa:chris-lea/node.js
 RUN apt-get install -y nodejs npm && npm update
 ENV NODE_PATH $NODE_PATH:/usr/local/lib/node_modules
 RUN npm install -g requirejs
@@ -24,7 +27,7 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 # Gradle requires jdk to work! Java incoming!
 RUN apt-get -y install openjdk-8-jdk wget unzip
-RUN bg # check that java works
+RUN java -version # check that java works
 
 # install gradle the annoying thing
 RUN mkdir /opt/gradle
@@ -40,7 +43,7 @@ RUN cd /var/lib/deploy/ && wget https://github.com/kermitt2/grobid/archive/0.5.1
     unzip grobid.zip && \
     cd /var/lib/deploy/grobid-0.5.1 && \
     gradle clean install && \
-#    mvn -Dmaven.test.skip=true clean install && \
+    #    mvn -Dmaven.test.skip=true clean install && \
     rm -f /var/lib/deploy/grobid.zip
 
 RUN chown -R deploy.deploy /var/lib/deploy/
@@ -60,8 +63,6 @@ RUN python -m spacy download en
 
 ARG TFVER=tensorflow
 RUN pip install $TFVER==1.12.0
-
-
 #strange Theano problem
 #ENV MKL_THREADING_LAYER=GNU
 
@@ -75,6 +76,9 @@ ADD robotreviewer /var/lib/deploy/robotreviewer
 RUN chown -R deploy.deploy /var/lib/deploy/robotreviewer
 
 USER deploy
+RUN wget https://s3-us-west-2.amazonaws.com/ai2-s2-research/scibert/tensorflow_models/scibert_scivocab_uncased.tar.gz
+RUN tar -zxf scibert_scivocab_uncased.tar.gz --directory /var/lib/deploy/robotreviewer/data
+RUN rm scibert_scivocab_uncased.tar.gz
 VOLUME /var/lib/deploy/src/robotreviewer/data
 # compile client side assets
 RUN cd /var/lib/deploy/robotreviewer/ && \

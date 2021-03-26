@@ -15,4 +15,6 @@ git
 rabbitmq-server
 sudo
 gradle
+psmisc
+vim
 net-tools
