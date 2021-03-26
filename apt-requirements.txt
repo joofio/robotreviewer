@@ -18,3 +18,4 @@ gradle
 psmisc
 vim
 net-tools
+nvidia-cuda-dev

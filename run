@@ -10,6 +10,6 @@ export DEBUG false
 export KERAS_BACKEND=tensorflow
 cd /var/lib/deploy/ && nohup bert-serving-start -model_dir /var/lib/deploy/robotreviewer/data/scibert_scivocab_uncased -num_worker=1 &
 sleep 2
-cd /var/lib/deploy/ && nohup env CUDA_VISIBLE_DEVICES=-1 celery -A robotreviewer.ml_worker worker --loglevel=info --concurrency=1 --pool=solo &
+cd /var/lib/deploy/ && nohup celery -A robotreviewer.ml_worker worker --loglevel=info --concurrency=1 --pool=solo &
 cd /var/lib/deploy/ && nohup python /var/lib/deploy/server.py &
 sleep infinity
