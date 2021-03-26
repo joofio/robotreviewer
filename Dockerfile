@@ -76,10 +76,7 @@ ADD robotreviewer /var/lib/deploy/robotreviewer
 RUN chown -R deploy.deploy /var/lib/deploy/robotreviewer
 
 USER deploy
-RUN wget https://s3-us-west-2.amazonaws.com/ai2-s2-research/scibert/tensorflow_models/scibert_scivocab_uncased.tar.gz
-RUN tar -zxf scibert_scivocab_uncased.tar.gz --directory /var/lib/deploy/robotreviewer/data
-RUN rm scibert_scivocab_uncased.tar.gz
-VOLUME /var/lib/deploy/src/robotreviewer/data
+VOLUME /var/lib/deploy/robotreviewer/data
 # compile client side assets
 RUN cd /var/lib/deploy/robotreviewer/ && \
     r.js -o static/build.js && \
