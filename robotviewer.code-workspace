@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		// "docker.commands.run": "docker run --name \"robotreviewer\" --volume ${workspaceFolder}/robotreviewer/data:/var/lib/deploy/robotreviewer/data --env ROBOTREVIEWER_REST_API=false -d --restart=\"always\" ${exposedPorts} ${tag}"
+		"docker.commands.run": "docker run --name \"robotreviewer-gpu\" --volume ${workspaceFolder}/robotreviewer/data:/var/lib/deploy/robotreviewer/data --env ROBOTREVIEWER_REST_API=false -d --restart=\"always\" ${exposedPorts} ${tag}",
+		"docker.commands.build": "docker build -f \"${dockerfile}\" --build-arg OSVER=\"nvidia/cuda:9.0-cudnn7-runtime\" --build-arg TFVER=\"tensorflow-gpu\" -t ${tag} \"${context}\""
+		// --runtime=nvidia
+	}
+}
