@@ -102,3 +102,5 @@ deploy.tar.gz
 !.gitkeep
 robotreviewer/config.json
 !robotreviewer/config.json.example
+robotreviewer/data/log.txt
+robotreviewer/data/scibert_scivocab_uncased
