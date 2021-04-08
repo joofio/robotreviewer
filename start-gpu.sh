@@ -1,4 +1,4 @@
 #!/bin/bash
-#--runtime=nvidia
+
 MODEL_PATH="$(pwd)/robotreviewer/data"
-docker run --name "robotreviewer-gpu" --volume ${MODEL_PATH}:/var/lib/deploy/robotreviewer/data  -d --env ROBOTREVIEWER_REST_API=false --restart="always" -p 127.0.0.1:5051:5000 robotreviewer-gpu
+docker run --name "robotreviewer-gpu" --volume ${MODEL_PATH}:/var/lib/deploy/robotreviewer/data  --env ROBOTREVIEWER_REST_API=false -d --restart="always" -p 127.0.0.1:5050:5000 robotreviewer-gpu
