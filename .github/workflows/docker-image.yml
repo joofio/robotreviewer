@@ -21,8 +21,10 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag jfcal/robotreviewer-gpu:$(date +%s)
+      run: |
+        tstz=$(date +%s)
+        docker build . --file Dockerfile --tag jfcal/robotreviewer-gpu:$tstz
     - name: Docker Push
-      run: docker push jfcal/robotreviewer-gpu:$(date +%s)
+      run: docker push jfcal/robotreviewer-gpu:$tstz
 
 
