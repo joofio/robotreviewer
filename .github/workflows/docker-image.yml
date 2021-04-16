@@ -20,14 +20,13 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-    - name: Set current date as env variable
-      run: echo "NOW::$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-    - name: Echo current date
-      run: echo $NOW
     - name: Build the Docker image
       run: |
-        docker build . --file Dockerfile --tag jfcal/robotreviewer-gpu:$NOW
+        docker build . --file Dockerfile --tag jfcal/robotreviewer-gpu:${{ github.ref }} --tag jfcal/robotreviewer-gpu:latest
     - name: Docker Push
-      run: docker push jfcal/robotreviewer-gpu:$NOW
+      run: |
+        docker push jfcal/robotreviewer-gpu:${{ github.ref }}
+        docker push jfcal/robotreviewer-gpu:latest
+        
 
 
