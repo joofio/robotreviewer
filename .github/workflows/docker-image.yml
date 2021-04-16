@@ -5,8 +5,7 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-env:
-    IMAGE_TAG: $(date +%s)
+
 jobs:
 
   build:
@@ -20,11 +19,15 @@ jobs:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - name: Set current date as env variable
+      run: echo "NOW::$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+    - name: Echo current date
+      run: echo $NOW
     - name: Build the Docker image
       run: |
-        docker build . --file Dockerfile --tag jfcal/robotreviewer-gpu:$IMAGE_TAG
+        docker build . --file Dockerfile --tag jfcal/robotreviewer-gpu:$NOW
     - name: Docker Push
-      run: docker push jfcal/robotreviewer-gpu:$IMAGE_TAG
+      run: docker push jfcal/robotreviewer-gpu:$NOW
 
 
