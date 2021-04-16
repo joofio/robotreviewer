@@ -23,8 +23,8 @@ jobs:
     - name: Build the Docker image
       run: |
         tstz=$(date +%s)
-        docker build . --file Dockerfile --tag jfcal/robotreviewer-gpu:$tstz
+        docker build . --file Dockerfile --tag jfcal/robotreviewer-github:latest
     - name: Docker Push
-      run: docker push jfcal/robotreviewer-gpu:$tstz
+      run: docker push jfcal/robotreviewer-github:latest
 
 
