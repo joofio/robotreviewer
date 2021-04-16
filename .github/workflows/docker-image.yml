@@ -5,7 +5,8 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
+env:
+    IMAGE_TAG: $(date +%s)
 jobs:
 
   build:
@@ -23,8 +24,8 @@ jobs:
     - name: Build the Docker image
       run: |
         tstz=$(date +%s)
-        docker build . --file Dockerfile --tag jfcal/robotreviewer-github:latest
+        docker build . --file Dockerfile --tag jfcal/robotreviewer-gpu:$IMAGE_TAG
     - name: Docker Push
-      run: docker push jfcal/robotreviewer-github:latest
+      run: docker push jfcal/robotreviewer-gpu:$IMAGE_TAG
 
 
