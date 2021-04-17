@@ -5,8 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+    
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
+      env:
+        OSVER: "nvidia/cuda:9.0-cudnn7-runtime"
+        TFVER: "tensorflow-gpu"
       with:
         name: jfcal/robotreviewer-gpu
         username: ${{ secrets.DOCKER_USERNAME }}
